@@ -648,9 +648,9 @@ module.exports = {
 Run:
 
 ```shell
-cucumber-js --profile ci
-# or
-cucumber-js -p ci
+npx cucumber-js --profile ci
+# or, if package.json has "test": "cucumber-js":
+npm test -- --profile ci
 ```
 
 Profiles can be applied repeatedly; options explicitly passed on the CLI can still override or append to them.
@@ -863,7 +863,7 @@ Then('the balance should be {int}', function (expectedBalance) {
 Cucumber.js supports async/promise step definitions:
 
 ```javascript
-When('Alice transfers ${int} to Bob', async function (amount) {
+When('Alice transfers {int} to Bob', async function (amount) {
   this.response = await this.api.transfer({ from: 'Alice', to: 'Bob', amount });
 });
 ```
