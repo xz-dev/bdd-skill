@@ -49,12 +49,7 @@ Primary references:
 - Cucumber Who does what / Three Amigos: https://cucumber.io/docs/bdd/who-does-what/
 - Cucumber anti-patterns: https://cucumber.io/docs/guides/anti-patterns/
 
-During creation, the Cucumber website docs repository was cloned/reviewed, and Cucumber.js docs plus executable feature files were sampled/reviewed for JavaScript-specific details such as World, hooks, snippets, and configuration. The repository now keeps a curated local runtime reference bundle instead of bulky reviewed-file inventories; pinned upstream commits and reviewed-file counts are recorded in `skills/bdd/references/upstream-source.json`. See:
-
-- `skills/bdd/references/source-notes.md`
-- `skills/bdd/references/upstream-source.json`
-- `skills/bdd/references/cucumber-website-license.txt`
-- `skills/bdd/references/cucumber-js-license.txt`
+During creation, the Cucumber website docs repository was cloned/reviewed, and Cucumber.js docs plus executable feature files were sampled/reviewed for JavaScript-specific details such as World, hooks, snippets, and configuration. The published repo keeps only runtime-useful local references instead of provenance inventories or vendored upstream documentation; source provenance is expressed by the direct official URLs above and by the source-fidelity notes embedded in `skills/bdd/SKILL.md`.
 
 ## Local reference bundle
 
@@ -64,11 +59,9 @@ The skill keeps the following local references under `skills/bdd/references/`:
 - `bdd-practice-reference.md`: BDD 的 Discovery/Formulation/Automation 实践要点与决策模板。
 - `gherkin-cucumber-reference.md`: Gherkin 与场景写作常见问题速查。
 - `cucumber-js-reference.md`: Cucumber.js 的执行侧落地与故障排查。
-- `source-notes.md`: 上游来源与取舍说明。
-- `upstream-source.json`: 上游元数据/哈希。
 
 ## License
 
-This skill repository is MIT licensed. Cucumber website documentation is MIT licensed by Aslak Hellesøy and contributors, and Cucumber.js is MIT licensed by Julien Biezemans and contributors. See `skills/bdd/references/cucumber-website-license.txt` and `skills/bdd/references/cucumber-js-license.txt` for upstream license notices.
+This skill repository is MIT licensed. It summarizes and links to Wikipedia, Cucumber, and Cucumber.js sources without vendoring their complete upstream documentation.
 
 The Wikipedia BDD page is referenced and briefly quoted with attribution as the definition anchor; this repository does not relicense Wikipedia content.
