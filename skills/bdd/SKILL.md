@@ -1,188 +1,270 @@
 ---
 name: bdd
-description: Use Behavior-Driven Development (BDD) with Cucumber/Gherkin-style executable specifications. Use when defining behavior, writing acceptance criteria, creating or reviewing .feature files, implementing Cucumber.js step definitions, or turning user stories into concrete examples before code.
-version: 0.1.0
+description: Use Behavior-Driven Development (BDD) as a collaboration/specification practice, with Cucumber/Gherkin and Cucumber.js as the bundled executable-specification reference. Use when defining behavior, examples, acceptance criteria, .feature files, Cucumber.js step definitions, or reviewing whether automation still expresses business behavior rather than implementation details.
+version: 0.2.0
 author: Xiangzhe and AI assistant
 license: MIT
 metadata:
   hermes:
-    tags: [bdd, behavior-driven-development, cucumber, gherkin, acceptance-tests, executable-specifications, javascript]
+    tags: [bdd, behavior-driven-development, examples, shared-understanding, cucumber, gherkin, acceptance-tests, executable-specifications, javascript]
   source:
-    wikipedia_bdd: "https://en.wikipedia.org/wiki/Behavior-driven_development"
+    primary_definition: "Behavior-driven development — Wikipedia: https://en.wikipedia.org/wiki/Behavior-driven_development"
     cucumber_docs: "https://cucumber.io/docs/"
     cucumber_javascript_tutorial: "https://cucumber.io/docs/guides/10-minute-tutorial?lang=javascript"
 ---
 
-# BDD（Behavior-Driven Development）编程指南
+# BDD（Behavior-Driven Development）预编译手册
 
-## 这项技能的目标
+## 0. 标准定义先于工具
 
-用 BDD 帮助团队把“要做什么”说清楚，再把这些例子变成可执行规格（executable specification）。
+**Behavior-driven development — Wikipedia:** <https://en.wikipedia.org/wiki/Behavior-driven_development>
 
-本技能严格以以下材料为准：
+> “Behavior-driven development (BDD) is an agile software development method centered around collaboration between business and IT professionals that have a stake in finding a solution for a complex problem. The core objective is to achieve a shared understanding of the problem.”
 
-- Wikipedia 对 BDD 的定义：BDD 是以业务和技术相关人员协作为中心的敏捷软件开发方法，核心目标是形成对问题的共享理解，并常用自然语言 DSL 表达行为和预期结果。
-- Cucumber 官方文档：BDD 不是“写测试工具”本身，而是围绕具体例子持续进行 Discovery、Formulation、Automation。
-- Cucumber/Gherkin 范式：用 `.feature` 文件、`Feature` / `Rule` / `Scenario` / `Given` / `When` / `Then` 表达行为，用 step definitions 将自然语言步骤连接到代码。
-- Cucumber 10-minute tutorial：采用 JavaScript 示例，因为结构简单，能清楚展示从 undefined → pending → failing → passing → refactor / examples 的 BDD 工作流。
+> “BDD involves use of a domain-specific language (DSL) using natural-language constructs ... that can express the behavior and the expected outcomes.”
 
-## 什么时候使用
+本技能从这个定义开始：**BDD 是一种围绕协作、共享理解、业务语言、具体例子和预期行为的敏捷开发方法**。BDD 可以用 Cucumber/Gherkin 实现，也可以用其他框架或轻量文档实现；**Cucumber 不是 BDD 本身，只是本技能内置的一套经典可执行规格实现参考**。
 
-使用本技能，当用户要：
+使用本技能时先问：“我们是否已经通过具体例子形成共享理解？”再问：“这些例子是否需要用 Cucumber.js 自动化？”不要反过来把 BDD 等同于“写 `.feature` 测试”。
 
-- 设计或澄清用户故事、验收标准、业务规则、边界例子。
-- 编写、评审或重构 Gherkin `.feature` 文件。
-- 用 Cucumber.js / JavaScript 实现 BDD 自动化。
-- 把“需求描述”改写成可讨论、可执行、可维护的例子。
-- 检查 Cucumber 场景是否过度 UI 化、过度技术化、feature-coupled、步骤耦合或不可复用。
+## 1. 本技能是什么：文档预编译，而不是链接清单
 
-不要把本技能当成普通测试模板。只在真正需要用例子澄清行为、验收规则或可执行规格时使用。
+本技能把 Wikipedia 的 BDD 定义、Cucumber 官方 BDD/Gherkin/Cucumber.js 文档、反模式和 JavaScript 10-minute tutorial 预编译成 AI 可立即使用的手册。未来 agent 使用本技能时，应直接从这里查标准，不要假设自己会主动回到网页重新理解。
 
-## BDD 的核心定义
+内置内容覆盖：
 
-BDD 的中心不是“测试覆盖率”，而是**共享理解**。
+- BDD 的定义、目标、误解、角色和协作流程。
+- Discovery → Formulation → Automation 的工作流。
+- Example Mapping、Three Amigos、User Story / Acceptance Criteria 的最小规则。
+- Gherkin 语法、场景写作风格、好/坏例子、反模式。
+- Cucumber.js 的项目结构、step definitions、World/state、hooks、配置、结果语义和官方 JavaScript 示例。
 
-按照 Wikipedia 和 Cucumber 文档，可以把 BDD 约束为：
+刻意不内置：完整 API 文档、所有 formatter/plugin/parallel/retry/sharding 选项、所有语言实现细节。需要精确配置参数或库版本时，再查官方 API/README。
 
-1. **协作**：业务人员、开发者、测试/质量人员共同澄清问题。
-2. **具体例子**：用真实、具体、领域化的数据来说明系统应该如何表现。
-3. **自然语言 DSL**：用业务可读的半形式化语言描述行为；Gherkin 是 Cucumber 生态中的典型形式。
-4. **可执行规格**：规格既是文档，也是自动化验收反馈。
-5. **Outside-in**：从用户/外部系统能观察到的价值和行为出发，而不是从内部实现细节出发。
+## 2. Source fidelity：参考资料分层
 
-BDD 起源上与 TDD 有关系，但不要把它简化为 TDD 的测试语法。Cucumber 明确强调：BDD 是 discovery、collaboration、examples；Cucumber 只是支持这个过程的工具。
+### 第一层：BDD 定义
 
-## 标准 BDD 流程：Discovery → Formulation → Automation
+- **Behavior-driven development — Wikipedia**：定义 BDD 的核心是业务与 IT 相关人员协作，目标是对问题形成共享理解；常用自然语言 DSL 表达行为和预期结果；BDD 与 TDD 有历史关系，但目的不是测试语法，而是共享理解和业务语言。
 
-### 1. Discovery：发现“它可能应该做什么”
+### 第二层：BDD 实践模型
 
-目标：通过对话发现业务规则、例子、反例、边界、例外和真正的验收语义。
+- **Cucumber BDD guide**：BDD 是用具体真实例子进行 Discovery、Formulation、Automation 的持续协作实践。
+- **Cucumber myths**：会话比记录会话更重要，记录会话比自动化会话更重要；代码写完后再自动化场景可以是测试自动化，但不是完整 BDD；使用 Cucumber 不等于正在做 BDD。
+- **Discovery workshop / Example Mapping / Who does what**：规定如何用团队角色和卡片化例子澄清范围。
 
-执行方式：
+### 第三层：可执行规格实现参考
 
-- 选一个小的用户故事或小变更，不要一次讨论整个系统。
-- 组织 Three Amigos 视角：业务/产品、开发、测试/质量；AI agent 在没有真人角色时要显式模拟这些视角并标注假设。
-- 先谈例子，再谈实现。问：
-  - 谁从这个行为获得价值？
-  - 正常路径是什么？
-  - 哪些输入应该被拒绝？
-  - 边界值、异常状态、权限差异、时间/金额/库存等领域边界在哪里？
-  - 用户或外部系统能观察到什么结果？
-- 如果当前代码或文档能回答问题，先读取证据，不要过早问用户。
-- 如果缺少业务决定，提出最小必要问题；不要用猜测代替领域决策。
+- **Gherkin reference**：Feature、Rule、Scenario/Example、Given/When/Then、Background、Scenario Outline、Examples、Doc Strings、Data Tables、Tags、language。
+- **Cucumber.js docs and 10-minute tutorial**：用 JavaScript 演示从 undefined → pending/failing → passing → refactor/Examples 的最小闭环。
+- **Anti-patterns / Better Gherkin / FAQ**：提供可维护性边界和反模式。
 
-产物：一组具体例子、业务规则、待确认假设。
+## 3. BDD 核心标准
 
-### 2. Formulation：把例子写成可自动化文档
+### 3.1 目标：共享理解，不是测试覆盖率
 
-目标：把已达成共识的例子写成 Gherkin，使人和工具都能读。
+BDD 的核心问题不是“测试有没有跑”，而是：业务、开发、测试/质量是否对同一个问题空间、业务规则和可观察行为形成了共享理解。
 
-要求：
+判断是否真的在做 BDD：
 
-- 使用业务语言和领域词汇。
-- 描述行为（what），不要描述实现（how）。
-- 例子要具体，不要抽象；但不要把技术/UI细节塞进场景。
-- 每个场景尽量只测试一个行为，失败时原因清晰。
-- 每个场景推荐 3–5 个步骤；步骤过多会削弱规格和文档表达力。
-- `Then` 验证可观察结果：UI 显示、API 响应、消息、报告、外部效果；不要为了方便直接检查深层数据库内部状态。
+- 是否先围绕具体例子对话，而不是先写实现？
+- 是否用业务语言表达行为，而不是技术实现语言？
+- 是否把例子写成可检查的规格，而不是抽象愿望？
+- 是否让业务方/用户代表能读懂并确认？
+- 自动化是否服务于规格反馈，而不是代替规格讨论？
 
-产物：`.feature` 文件中的 `Feature` / `Rule` / `Scenario` / `Scenario Outline`。
+### 3.2 BDD 与 TDD 的关系
 
-### 3. Automation：把规格连接到系统并驱动实现
+BDD 起源上受 TDD 影响，但不要把 BDD 简化为 TDD 的 “Given/When/Then 测试语法”。Wikipedia 摘要中强调，BDD 的目的在于对问题空间形成共享理解，并用业务语言、真实数据、意图揭示、必要且聚焦的方式写下来。
 
-目标：一次自动化一个例子，用失败反馈推动最小实现。
+可记为 **BRIEF**：
+
+- **Business language**：业务语言，而不是类名、表名、按钮名。
+- **Real data**：真实/具体数据，而不是 `foo`、`bar`、`user1`。
+- **Intention revealing**：揭示意图，让读者知道为什么这个行为重要。
+- **Essential**：只保留必要语义，不写无关实现步骤。
+- **Focused**：每个例子聚焦一个行为/规则。
+
+### 3.3 BDD 不是这些东西
+
+- **不是 Cucumber 专属**：Cucumber/Gherkin 是常见实现，不是 BDD 的定义。
+- **不是代码写完后的自动化补档**：那可以是 acceptance automation / characterization tests，但不是完整 BDD。
+- **不是 UI 操作脚本**：`.feature` 文件描述 what，不描述 how。
+- **不是大而全的测试用例仓库**：过多数据组合应被抽象到 helpers/builders，feature 文件保留关键例子。
+- **不是让一个人闭门写场景**：Discovery 需要协作。
+
+## 4. BDD 工作流：Discovery → Formulation → Automation
+
+Cucumber 的 BDD 文档把日常 BDD 分为三类实践：Discovery、Formulation、Automation。顺序很重要：**先会话，再记录，再自动化**。
+
+### 4.1 Discovery：发现行为和范围
+
+目标：技术与非技术相关者一起探索某个小用户故事，找出规则、例子、边界、反例和疑问。
+
+执行规则：
+
+- 一次只讨论一个小故事或小变更。若 25–30 分钟内无法澄清，故事可能太大或缺少研究。
+- 尽量在开发前“尽可能晚”举行 discovery，避免细节丢失，也允许计划根据新事实调整。
+- 至少覆盖 Three Amigos 视角：产品/业务、开发、测试/质量。
+- 先问例子，不要先问技术实现。
+- 对未知问题显式记录，而不是猜。
+
+AI agent 在没有真实三方会议时，应模拟三种视角，但必须标注哪些是推断、哪些需要用户确认。
+
+### 4.2 Three Amigos：三种必要声音
+
+- **Product owner / business representative**：决定范围、价值、哪些边界属于当前故事。
+- **Tester / quality voice**：提出边界、失败路径、遗漏故事、系统如何破坏。
+- **Developer / technical voice**：识别实现约束、依赖、隐藏复杂度和自动化可行性。
+
+重要：场景语言初期应由全队一起建立；成熟后可以由开发+测试成对写 Gherkin，但需要产品/业务代表主动 review。
+
+### 4.3 Example Mapping：把故事、规则、例子、问题分开
+
+在进入开发前，用 Example Mapping 快速澄清 acceptance criteria：
+
+- **Story（黄卡）**：当前用户故事。
+- **Rules / acceptance criteria（蓝卡）**：约束、规则、验收标准。
+- **Examples（绿卡）**：说明规则的具体例子。
+- **Questions（红卡）**：当前无法回答的问题或假设。
+- **New stories（另行记录）**：发现但延后出范围的新故事。
+
+保持对话直到团队认为当前故事范围清晰，或时间到。未回答问题不要硬编码进规格。
+
+### 4.4 User Story 与 Acceptance Criteria
+
+User Story 是用于计划和优先级的小块价值功能。好故事通常满足 INVEST：Independent、Negotiable、Valuable、Estimable、Small、Testable。
+
+常见故事格式：
+
+```text
+As an <actor>
+I want a <feature>
+So that <benefit>
+```
+
+BDD 不要求每个 feature 文件都使用这种格式，但需要能回答：
+
+- Who：谁受益？
+- What：需要什么能力？
+- Why：为什么有价值？
+- Acceptance：什么具体行为证明它完成？
+
+### 4.5 Formulation：把例子写成可读、可自动化规格
+
+目标：把已讨论清楚的例子写成人类和工具都能理解的形式。Cucumber 生态里通常是 Gherkin。
+
+Formulation 要求：
+
+- 使用领域语言。
+- 具体但不技术化。
+- 描述行为（what），不描述实现（how）。
+- 每个场景聚焦一个行为/规则。
+- 场景独立，可任意顺序运行。
+- `Then` 只验证可观察结果。
+
+### 4.6 Automation：把规格连接到系统
+
+目标：一次自动化一个例子，用失败反馈驱动最小实现。
 
 标准节奏：
 
-1. 先写场景，运行 Cucumber，看到 `undefined`。
-2. 添加必要 step definitions，运行，看到 `pending` 或 failing。
-3. 让 step definition 调用系统行为，并在 `Then` 中断言预期结果。
-4. 先看到失败（red），确认例子确实能捕获缺失行为。
+1. 先写 scenario，运行 Cucumber，看到 `undefined`。
+2. 添加 step definitions，运行，看到 `pending` 或 failing。
+3. 让 step definition 调用系统行为，并在 `Then` 中断言。
+4. 先看到失败（red），证明例子能捕获缺失行为。
 5. 做最小实现使其通过（green）。
 6. 重构实现和 step definitions，保持场景语言稳定。
-7. 增加新的具体例子或 `Scenario Outline`，继续循环。
+7. 添加下一个例子或 `Scenario Outline`，继续循环。
 
-如果代码已经写完后才补 Cucumber 场景，这可以是测试自动化，但不要声称这是完整 BDD；BDD 的发现和表述应该先参与设计。
+如果用户只要求“写 Gherkin”，不要擅自实现生产代码；如果用户要求“用 BDD 实现”，才进入完整自动化和 red/green。
 
-## Gherkin 编写规则
+## 5. Cucumber 在本技能里的位置
 
-### 基本结构
+Cucumber 是把 Gherkin 可执行规格连接到代码的工具。它读取 `.feature` 文件，匹配 step definitions，执行系统行为并报告结果。它是 BDD 自动化的经典实现，但不是唯一实现。
 
-```gherkin
-Feature: <能力或业务主题>
-  <这个能力为什么重要，服务谁，解决什么问题>
+使用 Cucumber 时，仍然遵守 BDD 顺序：
 
-  Rule: <一条业务规则>
+1. 先对话形成例子。
+2. 再写 Gherkin。
+3. 最后写 step definitions 和实现。
 
-    Scenario: <一个具体例子>
-      Given <初始上下文>
-      When <触发事件或动作>
-      Then <可观察结果>
-```
+不要因为项目已经装了 Cucumber，就跳过 Discovery；也不要因为 skill 内置 Cucumber.js 示例，就把所有 BDD 任务都假定为 JavaScript 项目。若项目使用其他语言/框架，迁移原则和 Gherkin 语言，替换自动化层。
 
-- 一个 `.feature` 文件只有一个 `Feature`。
-- `Rule` 用来把同一 feature 下的多个场景按业务规则分组。
-- `Scenario` 和 `Example` 在 Gherkin 中同义；本技能默认使用更常见的 `Scenario`。
-- `Scenario Outline` + `Examples` 用于同一行为在多组输入/输出上的例子。
-- `Background` 只放所有场景共同且需要读者知道的上下文；低层技术准备优先放 hook。
+## 6. Gherkin 预编译快速手册
 
-### Given / When / Then
+### 6.1 文件和顶层结构
 
-- `Given`：初始上下文，让系统处于明确状态。避免写用户交互细节。
-- `When`：发生的事件或动作。通常是用户或外部系统触发的单一行为。
-- `Then`：预期结果。必须用断言验证实际结果与预期结果一致。
-- `And` / `But`：只用于可读性，延续前一个步骤类型。
-- `*`：可用于列表式步骤，但不要滥用。
-
-注意：Cucumber 匹配 step definition 时不看 `Given` / `When` / `Then` 关键字，只匹配后面的文本。因此下面两句会冲突：
+一个 `.feature` 文件只能有一个 `Feature`。
 
 ```gherkin
-Given there is money in my account
-Then there is money in my account
+@billing
+Feature: Subscription billing
+  Customers should be charged according to their active plan
+  so that access and revenue remain aligned.
+
+  Rule: Active paid subscribers keep access
+
+    Scenario: Paid subscriber can read paid article
+      Given Priya has an active basic subscription
+      When Priya opens the paid article "Scaling Rails"
+      Then Priya can read the article
 ```
 
-改成更明确的领域语言：
+建议缩进两个空格。注释只能是新行开头的 `#`；Gherkin 不支持块注释。
+
+### 6.2 Feature
+
+`Feature:` 给出高层能力和场景分组。标题简短；下面的自由描述用于说明业务上下文、价值、规则列表。自由描述不会影响执行，但会进入报告。
+
+好 Feature 描述能回答 Why / Who / What：
 
 ```gherkin
-Given my account has a balance of £430
-Then my account should have a balance of £430
+Feature: Account balance
+  As a mobile bank customer
+  I want to see balances for my accounts
+  So that I can make informed spending decisions
 ```
 
-### 好的场景语言
-
-好的 Gherkin：
-
-- 讲业务行为，不讲按钮、CSS、URL、数据库表。
-- 使用具体领域数据：人名、日期、金额、角色、状态。
-- 保持语言一致；同一个意思不要写三种句子。
-- 每个步骤表达一件事；步骤中间出现 “and” 往往应该拆成两个步骤。
-- 问自己：如果 UI 或实现换了，这个场景还应该成立吗？如果不成立，多半写得太实现化。
-
-#### 正确：描述行为
+不要把 Feature 写成技术模块名：
 
 ```gherkin
-Scenario: Subscriber with a paid subscription can access paid content
-  Given Paid Patty has a basic-level paid subscription
-  When Paid Patty logs in with her valid credentials
-  Then she sees a Free article and a Paid article
+Feature: AccountController GET /api/v1/accounts JSON serializer
 ```
 
-#### 错误：描述 UI 操作过程
+除非你的产品就是 API contract，否则这不是业务语言。
+
+### 6.3 Rule
+
+`Rule:` 表示一个业务规则，并把说明该规则的多个 scenarios 归组。一个 rule 应有一个或多个例子。
 
 ```gherkin
-Scenario: Subscriber with a paid subscription can access paid content
-  Given I am on the login page
-  When I type "paid@example.com" in the email field
-  And I type "validPassword123" in the password field
-  And I press the "Submit" button
-  Then I see "FreeArticle1" and "PaidArticle1" on the home page
+Feature: Transfer limits
+
+  Rule: Transfers above the daily limit are rejected
+
+    Scenario: Alice exceeds her daily limit
+      Given Alice has already transferred $900 today
+      When Alice tries to transfer $200 to Bob
+      Then the transfer is rejected
+      And Alice is told her remaining daily limit is $100
 ```
 
-UI 自动化可以在 step definition/helper 里做；`.feature` 里保留业务意图。
+使用 `Rule` 可以避免 feature 文件变成无结构的 scenario 列表。
 
-### 具体但不技术化
+### 6.4 Scenario / Example
 
-BDD 例子应具体，不要抽象：
+`Scenario` 和 `Example` 在 Gherkin 中同义。一个 scenario 是说明业务规则的具体例子，也是一条可执行测试。
+
+官方建议每个 example 约 3–5 步；太多步骤会削弱规格/文档表达力。若一句话无法说明 scenario 目的，通常需要拆分。
+
+### 6.5 Given / When / Then
+
+- `Given`：初始上下文，使系统处于已知状态。避免用户交互细节。
+- `When`：事件或动作，由用户或外部系统触发。
+- `Then`：预期结果，必须用断言验证实际结果。
+- `And` / `But`：延续前一个步骤类型，用于可读性。
+- `*`：可把同类步骤写成项目列表。
 
 ```gherkin
 Scenario: Transfer within the daily limit
@@ -193,27 +275,229 @@ Scenario: Transfer within the daily limit
   And Bob receives a $125 transfer notification
 ```
 
-但不要写成：
+### 6.6 Step 匹配的重要限制
+
+Cucumber 匹配 step definition 时不看 `Given` / `When` / `Then` 关键字，只匹配后面的文本。因此这些会冲突：
 
 ```gherkin
-Scenario: Transfer within the daily limit
-  Given row id 42 exists in accounts table
-  When POST /api/v1/transfer returns 200
-  Then transfers.status column equals "sent"
+Given there is money in my account
+Then there is money in my account
 ```
 
-除非你的产品本身就是 API contract，普通业务 BDD 不应该暴露内部实现。
+改成明确领域语言：
 
-## Cucumber.js 标准项目形态
+```gherkin
+Given my account has a balance of £430
+Then my account should have a balance of £430
+```
 
-最小 JavaScript 项目：
+### 6.7 Background
+
+`Background` 用于所有场景都需要读者知道的共同上下文。它在每个 scenario 前执行，并且在 Before hooks 之后执行。
+
+```gherkin
+Feature: Blog posting
+
+  Background:
+    Given a global administrator named "Greg"
+    And a customer named "Dr. Bill"
+
+  Scenario: Customer posts to own blog
+    Given I am logged in as Dr. Bill
+    When I try to post to "Expensive Therapy"
+    Then I should see "Your article was published."
+```
+
+使用规则：
+
+- 如果 setup 对业务读者重要，用 `Background` 或 `Given`。
+- 如果 setup 只是启动浏览器、清理数据库，用 hooks。
+- Background 保持短；超过约 4 行时考虑提高抽象或拆 Rule/Feature。
+- Background 中的人名/状态应 vivid，避免 `User A` / `Site 1`。
+
+### 6.8 Scenario Outline / Examples
+
+当同一行为需要多组输入/输出时，用 `Scenario Outline` + `Examples`，不要复制粘贴多个几乎相同的 scenario。
+
+```gherkin
+Scenario Outline: Today is or is not Friday
+  Given today is "<day>"
+  When I ask whether it's Friday yet
+  Then I should be told "<answer>"
+
+  Examples:
+    | day            | answer |
+    | Friday         | TGIF   |
+    | Sunday         | Nope   |
+    | anything else! | Nope   |
+```
+
+`<day>` / `<answer>` 会在匹配 step definition 前替换为表格值。Outline 本身不直接运行；每个 Examples 行运行一次。
+
+### 6.9 Doc Strings
+
+Doc Strings 用于传递多行文本给 step definition。它会作为最后一个参数传入。
+
+```gherkin
+Given a blog post named "Random" with Markdown body
+  """markdown
+  # Some Title
+
+  Here is the first paragraph.
+  """
+```
+
+可以使用 `"""` 或反引号三连；很多编辑器对 `"""` 支持更稳定。Doc String 可标注内容类型，如 `"""markdown`。
+
+### 6.10 Data Tables
+
+Data Tables 用于传递结构化列表/表格，作为最后一个参数传入 step definition。
+
+```gherkin
+Given the following users exist:
+  | name   | email             | role  |
+  | Alice  | alice@example.com | admin |
+  | Bob    | bob@example.com   | user  |
+```
+
+不要把 Data Table 当成 Excel/CSV 测试矩阵的替代品；feature 文件应保留关键例子，而不是海量测试数据。
+
+### 6.11 Tags
+
+Tags 用 `@` 标注 Feature、Rule、Scenario 或 Examples，用于分组、过滤、条件 hooks、报告。示例：
+
+```gherkin
+@billing @smoke
+Scenario: Paid subscriber keeps access
+  ...
+```
+
+常用用途：
+
+- `@smoke` / `@critical`：快速反馈子集。
+- `@wip`：临时工作标记，提交前应清理或明确策略。
+- `@browser` / `@api`：执行环境分组。
+- 条件 hooks：只对某些 tagged scenarios 启动浏览器或清理外部资源。
+
+不要用 tags 掩盖场景混乱；tags 不是分类体系的替代品。
+
+### 6.12 语言本地化
+
+Gherkin 支持多种自然语言。语言应与用户和领域专家讨论领域时使用的语言一致，避免翻译损失。
+
+可在 feature 文件第一行写：
+
+```gherkin
+# language: zh-CN
+```
+
+本技能示例默认用英文 Gherkin 关键字，因为 Cucumber.js tutorial 和多数项目默认英文；具体项目可按团队语言决定。
+
+## 7. 好的 BDD/Gherkin 写作标准
+
+### 7.1 具体，但不技术化
+
+好例子使用具体人名、地点、日期、金额、角色和领域事实：
+
+```gherkin
+Scenario: Discount expires after campaign end date
+  Given Carla has a 20% summer discount expiring on 2026-08-31
+  When Carla checks out on 2026-09-01
+  Then the summer discount is not applied
+```
+
+坏例子过于抽象：
+
+```gherkin
+Scenario: Discount works
+  Given a user has a discount
+  When the user checks out
+  Then the result is correct
+```
+
+也不要技术化：
+
+```gherkin
+Scenario: Discount expires after campaign end date
+  Given row id 42 exists in discounts table
+  When POST /api/v1/checkout returns 200
+  Then order_discounts.applied equals false
+```
+
+Cucumber 的 “Imagine it’s 1922” 启发：尽量写成没有计算机也能理解的行为；技术细节藏在 step definitions。
+
+### 7.2 What not how
+
+好：
+
+```gherkin
+Scenario: Subscriber can access paid content
+  Given Paid Patty has a basic-level paid subscription
+  When Paid Patty logs in
+  Then she can read the paid article "Building Reliable Systems"
+```
+
+坏：
+
+```gherkin
+Scenario: Subscriber can access paid content
+  Given I am on the login page
+  When I type "paid@example.com" in the email field
+  And I type "validPassword123" in the password field
+  And I press the "Submit" button
+  Then I see "Building Reliable Systems" inside div.article-title
+```
+
+UI 操作可在 helper 里实现；scenario 保留业务意图。
+
+### 7.3 每个 step 表达一件事
+
+坏 conjunction step：
+
+```gherkin
+Given I have shades and a brand new Mustang
+```
+
+好：
+
+```gherkin
+Given I have shades
+And I have a brand new Mustang
+```
+
+如果多个底层动作需要合成一个高层动作，组合 helper methods，不要把 Gherkin step 文本写成复合句。
+
+### 7.4 保持语言一致
+
+不要在不同场景里用多种句子表达同一个状态：
+
+```gherkin
+Given I am logged in
+Given I have logged in to the site
+Given my session is authenticated
+```
+
+选一个领域表达并复用。语言不一致会导致 step definitions 膨胀、匹配歧义和维护成本上升。
+
+### 7.5 每个 scenario 独立
+
+Scenario 必须可单独运行、任意顺序运行、并行运行。不要让一个 scenario 依赖另一个 scenario 先创建数据。
+
+- 业务可读上下文：`Given` / `Background`。
+- 技术环境：hooks / fixtures / builders。
+- 外部服务：测试替身或可控测试环境。
+- 跨场景共享状态：不要做。
+
+## 8. Cucumber.js 预编译快速手册
+
+### 8.1 最小项目形态
 
 ```shell
 mkdir hellocucumber
 cd hellocucumber
 npm init --yes
 npm install --save-dev @cucumber/cucumber
-mkdir -p features/step_definitions
+mkdir -p features/step_definitions features/support
 ```
 
 `package.json`：
@@ -229,7 +513,70 @@ mkdir -p features/step_definitions
 }
 ```
 
-Cucumber 官方 tutorial 为了让生成 snippets 使用同步函数，创建了 `cucumber.json`：
+Node.js 版本注意：`@cucumber/cucumber@13` 要求较新的 Node.js（当前 npm 元数据为 Node `22 || 24 || >=26`）。若项目仍在 Node 20 或更旧版本，先运行：
+
+```shell
+npm view @cucumber/cucumber engines
+```
+
+选择兼容版本，不要盲目复制最新版本号。
+
+### 8.2 常见目录
+
+```text
+features/
+  billing.feature
+  account.feature
+  step_definitions/
+    billing_steps.js
+    account_steps.js
+    authentication_steps.js
+  support/
+    world.js
+    hooks.js
+```
+
+Cucumber.js 默认查找：
+
+- features：`features/**/*.{feature,feature.md}`。
+- support code：若 features 位于 `features/`，默认找 `features/**/*.@(js|cjs|mjs)`。
+
+如果手动配置 `import` 或 `require`，默认 support code 查找会被替换，需要显式列全。
+
+### 8.3 配置文件
+
+Cucumber.js 会在项目根目录按顺序寻找：
+
+- `cucumber.json`
+- `cucumber.yaml`
+- `cucumber.yml`
+- `cucumber.js`
+- `cucumber.cjs`
+- `cucumber.mjs`
+
+也可用 `--config` 指定。
+
+CommonJS 示例：
+
+```javascript
+module.exports = {
+  default: {
+    format: ['progress-bar', 'html:cucumber-report.html'],
+    require: ['features/**/*.js']
+  }
+};
+```
+
+ESM 示例：
+
+```javascript
+export default {
+  format: ['progress-bar', 'html:cucumber-report.html'],
+  import: ['features/**/*.mjs']
+};
+```
+
+Tutorial 为了让 snippets 用同步函数，使用过：
 
 ```json
 {
@@ -241,17 +588,46 @@ Cucumber 官方 tutorial 为了让生成 snippets 使用同步函数，创建了
 }
 ```
 
-这只是 tutorial 便利设置；实际项目可按团队需要选择 sync/async、ESM/CommonJS、profiles、formatters、parallel、tags 等配置。
+这是学习便利设置，不是所有项目的默认最佳实践。
 
-Cucumber.js 应作为项目依赖安装，不要依赖全局安装；support files 需要 `require('@cucumber/cucumber')` 或 `import` 本项目依赖。
+### 8.4 Profiles
 
-注意 Node.js 版本：`@cucumber/cucumber@13` 要求较新的 Node.js（当前 npm 元数据为 Node `22 || 24 || >=26`）。如果项目仍在 Node 20 或更旧版本上，先查看 Cucumber.js 安装文档/`npm view @cucumber/cucumber engines`，选择兼容版本，而不是盲目复制最新版本号。
+Profiles 用于把不同运行配置打包成命令别名。
 
-## Cucumber.js 示例：Is it Friday yet?
+```javascript
+const common = {
+  require: ['features/**/*.js'],
+  worldParameters: {
+    appUrl: process.env.APP_URL || 'http://localhost:3000/'
+  }
+};
 
-### 1. 先写场景
+module.exports = {
+  default: {
+    ...common,
+    format: ['progress-bar']
+  },
+  ci: {
+    ...common,
+    format: ['html:cucumber-report.html'],
+    publish: true
+  }
+};
+```
 
-`features/is_it_friday_yet.feature`：
+运行：
+
+```shell
+cucumber-js --profile ci
+# 或
+cucumber-js -p ci
+```
+
+Profiles 可重复应用；CLI 上显式传入的选项仍可覆盖或追加。
+
+### 8.5 官方 JavaScript tutorial 闭环：Is it Friday yet?
+
+先写 `features/is_it_friday_yet.feature`：
 
 ```gherkin
 Feature: Is it Friday yet?
@@ -263,15 +639,7 @@ Feature: Is it Friday yet?
     Then I should be told "Nope"
 ```
 
-运行：
-
-```shell
-npm test
-```
-
-期望先看到 undefined steps。Cucumber 会提示可以实现的 snippets。这是正确进展：规格先于实现。
-
-### 2. 加 step definitions，使其从 pending 进入 failing
+运行 `npm test`，先看到 undefined steps。然后写 step definitions。
 
 `features/step_definitions/stepdefs.js`：
 
@@ -280,7 +648,7 @@ const assert = require('assert');
 const { Given, When, Then } = require('@cucumber/cucumber');
 
 function isItFriday(today) {
-  // Intentionally blank: first run should fail.
+  // First implementation intentionally incomplete/failing.
 }
 
 Given('today is Sunday', function () {
@@ -296,9 +664,7 @@ Then('I should be told {string}', function (expectedAnswer) {
 });
 ```
 
-运行后应该失败，因为 `actualAnswer` 是 `undefined` 而不是 `"Nope"`。这证明场景确实能捕获缺失行为。
-
-### 3. 做最小实现使第一个例子通过
+此时应失败，因为 `actualAnswer` 是 `undefined`。然后做最小实现：
 
 ```javascript
 function isItFriday(today) {
@@ -306,9 +672,7 @@ function isItFriday(today) {
 }
 ```
 
-第一个例子通过，但实现显然还不完整。这是 BDD/TDD 的小步反馈，不是最终设计。
-
-### 4. 添加第二个失败例子
+再加 Friday 例子并看到失败：
 
 ```gherkin
 Scenario: Friday is Friday
@@ -317,46 +681,22 @@ Scenario: Friday is Friday
   Then I should be told "TGIF"
 ```
 
-先添加最小 step：
-
-```javascript
-Given('today is Friday', function () {
-  this.today = 'Friday';
-});
-```
-
-运行应该失败：`"Nope"` 不等于 `"TGIF"`。
-
-### 5. 使两个例子通过
-
-```javascript
-function isItFriday(today) {
-  if (today === 'Friday') {
-    return 'TGIF';
-  }
-  return 'Nope';
-}
-```
-
-### 6. 用 Scenario Outline 收敛重复例子
+收敛为 `Scenario Outline`：
 
 ```gherkin
-Feature: Is it Friday yet?
-  Everybody wants to know when it's Friday
+Scenario Outline: Today is or is not Friday
+  Given today is "<day>"
+  When I ask whether it's Friday yet
+  Then I should be told "<answer>"
 
-  Scenario Outline: Today is or is not Friday
-    Given today is "<day>"
-    When I ask whether it's Friday yet
-    Then I should be told "<answer>"
-
-    Examples:
-      | day            | answer |
-      | Friday         | TGIF   |
-      | Sunday         | Nope   |
-      | anything else! | Nope   |
+  Examples:
+    | day            | answer |
+    | Friday         | TGIF   |
+    | Sunday         | Nope   |
+    | anything else! | Nope   |
 ```
 
-对应 step definitions：
+最终 step definitions：
 
 ```javascript
 const assert = require('assert');
@@ -382,58 +722,69 @@ Then('I should be told {string}', function (expectedAnswer) {
 });
 ```
 
-## Step definitions 编写规则
+这个例子体现的是 BDD/TDD 小步反馈，不是业务复杂度本身。
 
-### 用 Cucumber Expressions 优先表达参数
+## 9. Step definitions 手册
 
-优先：
+### 9.1 Step definition 是 glue code
+
+Step definition 用表达式把 Gherkin step 文本连接到代码。当 Cucumber 执行 step 时，会寻找匹配的 step definition。
 
 ```javascript
-Given('today is {string}', function (givenDay) {
-  this.today = givenDay;
-});
+const { Given } = require('@cucumber/cucumber');
 
 Given('I have {int} cucumbers', function (count) {
   this.cucumbers = count;
 });
 ```
 
-必要时再用正则。不要同一个 step definition 同时混用 Cucumber Expression 和 regex 语义。
+优先使用 Cucumber Expressions：
 
-### 只实现真实场景需要的 steps
+- `{string}`：带引号字符串。
+- `{int}`：整数。
+- `{float}`：浮点数。
+- `{word}`：单词。
 
-不要预先写一堆“将来可能用到”的 step definitions。Cucumber 文档建议只实现场景中已经出现的步骤；否则会产生 cruft、重复和歧义。
+需要复杂匹配时再用 RegExp：
 
-### 按领域概念组织 step 文件
+```javascript
+Given(/^I have (\d+) cucumbers$/, function (count) {
+  this.cucumbers = Number(count);
+});
+```
 
-推荐：
+不要让一个 step 能被多个 definitions 匹配；这会 ambiguous。
+
+### 9.2 只实现真实场景需要的 steps
+
+不要预先写“可能以后会用”的 step definitions。只实现当前 `.feature` 中已经出现的 steps；需要复用时再重构。
+
+### 9.3 按领域概念组织 step 文件
+
+推荐按领域对象/概念分组：
 
 ```text
-features/
-  account.feature
-  transfer.feature
-  step_definitions/
-    account_steps.js
-    transfer_steps.js
-    authentication_steps.js
+features/step_definitions/
+  employee_steps.js
+  education_steps.js
+  experience_steps.js
+  authentication_steps.js
 ```
 
 不推荐按 feature 文件机械绑定：
 
 ```text
-features/
-  edit_work_experience.feature
-  edit_languages.feature
-  step_definitions/
-    edit_work_experience_steps.js
-    edit_languages_steps.js
+features/step_definitions/
+  edit_work_experience_steps.js
+  edit_languages_steps.js
+  edit_education_steps.js
 ```
 
-后者容易形成 feature-coupled step definitions，复用差、重复多、维护成本高。
+后一种容易形成 feature-coupled step definitions：不可复用、重复多、维护成本高。
 
-### 使用 helper methods 复用实现，不要让 steps 调 steps
+### 9.4 用 helper methods 复用，不要 steps 调 steps
 
-如果多个 step definitions 需要共同动作，抽取普通 JavaScript helper：
+好：
 
 ```javascript
 function logInAs(world, userName) {
@@ -446,32 +797,20 @@ Given('{word} is logged in', function (name) {
 });
 ```
 
-不要通过“从一个 step definition 调另一个 Gherkin step”来复用。组合与复用应该用编程语言自身的函数、类、fixture、builder。
+不要在 step definition 中调用另一个 Gherkin step 文本来复用逻辑。组合和复用属于编程语言层，使用 helper、builder、fixture、domain service。
 
-### 正确使用 World / this
+### 9.5 Step results 语义
 
-Cucumber.js 为每个 scenario 提供隔离的 World 上下文。普通函数的 `this` 指向当前 World，可在步骤之间共享状态：
+Cucumber step 结果：
 
-```javascript
-Given('Alice has $430', function () {
-  this.account = new Account('Alice', 430);
-});
-```
+- **Success**：找到匹配 step definition，执行且没有抛错/reject。
+- **Undefined**：找不到匹配 step definition；后续步骤 skipped。
+- **Pending**：step definition 明确标记 pending；表示还有工作。
+- **Failed**：执行时抛错/reject。
+- **Skipped**：跟在 undefined/pending/failed 后，未执行。
+- **Ambiguous**：多个 definitions 匹配同一步骤。
 
-不要在需要 `this` 的 step/hook 中使用箭头函数：
-
-```javascript
-// 错误：箭头函数绑定词法 this，无法使用 Cucumber World。
-Given('Alice has $430', () => {
-  this.account = new Account('Alice', 430);
-});
-```
-
-如果不需要 World，箭头函数也许能工作；但为了统一和避免未来维护陷阱，本技能建议 Cucumber.js step definitions 和 hooks 默认使用 `function () {}`。
-
-### `Then` 必须断言；返回 false 不会失败
-
-Cucumber step definition 成功/失败取决于是否抛出错误或 rejected promise。返回 `false`、`null` 等值不会让步骤失败。
+重要：返回值没有通过/失败意义；`return false`、`return null` 不会失败。
 
 正确：
 
@@ -485,13 +824,90 @@ Then('the balance should be {int}', function (expectedBalance) {
 
 ```javascript
 Then('the balance should be {int}', function (expectedBalance) {
-  return this.account.balance === expectedBalance; // Cucumber 不会因 false 自动失败
+  return this.account.balance === expectedBalance;
 });
 ```
 
-### Hooks 只放低层技术准备/清理
+### 9.6 Async step definitions
 
-可以用 hooks：
+Cucumber.js 支持 async/promise：
+
+```javascript
+When('Alice transfers ${int} to Bob', async function (amount) {
+  this.response = await this.api.transfer({ from: 'Alice', to: 'Bob', amount });
+});
+```
+
+失败应通过 assertion error、throw、或 rejected promise 表达。
+
+## 10. State / World 手册
+
+### 10.1 不要跨 scenario 共享状态
+
+Cucumber state 文档的核心规则：不要在 scenarios 之间共享状态。跨场景状态泄漏会让测试脆弱，无法单独运行。
+
+避免：
+
+- global/static 变量保存业务状态。
+- scenario 之间复用数据库记录且不清理。
+- browser session/cookies 泄漏。
+
+可做：
+
+- `Before` hook 清理数据库。
+- `Before` hook 清理 cookies。
+- 每个 scenario 构建自己的测试数据。
+
+### 10.2 Cucumber.js World
+
+Cucumber-JS 为每个 scenario 创建隔离的 World。普通 `function () {}` step/hook 中的 `this` 指向当前 World，可在同一 scenario 的 steps 之间共享状态。
+
+```javascript
+Given('Alice has $430', function () {
+  this.account = new Account('Alice', 430);
+});
+
+When('Alice withdraws $30', function () {
+  this.account.withdraw(30);
+});
+
+Then('Alice has $400', function () {
+  assert.strictEqual(this.account.balance, 400);
+});
+```
+
+不要在需要 `this` 的 step/hook 中使用箭头函数：
+
+```javascript
+// 错误：箭头函数绑定词法 this，无法使用 Cucumber World。
+Given('Alice has $430', () => {
+  this.account = new Account('Alice', 430);
+});
+```
+
+本技能默认建议 Cucumber.js step definitions 和 hooks 使用普通函数，除非明确不需要 World 且团队已有约定。
+
+### 10.3 World 参数
+
+Cucumber.js 可通过 `worldParameters` 把环境参数传给 World，例如 app URL、浏览器类型、测试租户等。适合环境配置，不适合业务规则决策。
+
+```javascript
+module.exports = {
+  default: {
+    worldParameters: {
+      appUrl: process.env.APP_URL || 'http://localhost:3000/'
+    }
+  }
+};
+```
+
+不要把 secret 写进 feature 文件或提交到配置。
+
+## 11. Hooks 手册
+
+Hooks 是在 Cucumber 执行周期中运行的代码块，通常用于环境 setup/teardown。
+
+### 11.1 Before / After
 
 ```javascript
 const { Before, After } = require('@cucumber/cucumber');
@@ -505,17 +921,51 @@ After(async function () {
 });
 ```
 
-但 Cucumber 文档提醒：hook 中发生的事情对只读 feature 的人不可见。如果准备条件对业务理解重要，优先写成 `Background` 或 `Given`；hooks 只放启动浏览器、清理数据库、重置外部测试环境等低层技术逻辑。
+Cucumber 明确提醒：Before hook 里的事情对只读 feature 的人不可见。如果 setup 对业务理解重要，用 `Background` 或 `Given`；hook 只放低层逻辑，如启动浏览器、删除数据库数据、重置测试环境。
 
-## 常见反模式与修正
+### 11.2 Conditional hooks
 
-### 反模式：把 BDD 当成“自动化测试 after the fact”
+可以用 tags 限定 hooks：
 
-症状：实现完成后才补 `.feature`，没有具体例子讨论，没有业务反馈。
+```javascript
+Before({ tags: '@browser' }, async function () {
+  this.browser = await startBrowser();
+});
+```
 
-修正：至少对下一个变更恢复 Discovery → Formulation → Automation。对既有代码补规格时，明确说这是 characterization/acceptance automation，不要假装已经完成 BDD。
+适合只对 UI scenarios 启动浏览器，或只对某类外部资源做清理。
 
-### 反模式：过程化 UI 脚本
+### 11.3 BeforeStep / AfterStep
+
+用于每一步前后插入逻辑，例如调试、截图、日志。不要滥用；如果每步都在做复杂工作，可能说明测试架构需要重构。
+
+```javascript
+const { AfterStep } = require('@cucumber/cucumber');
+
+AfterStep(async function ({ pickleStep }) {
+  if (this.debug) {
+    this.log(`finished step: ${pickleStep.text}`);
+  }
+});
+```
+
+失败截图常放在 `After` hook 中根据 scenario 状态处理，而不是污染业务场景。
+
+## 12. 反模式与修正
+
+### 12.1 “用 Cucumber 就是 BDD”
+
+错误：装了 Cucumber，写了 feature 文件，但没有协作、没有例子讨论、没有业务反馈。
+
+修正：恢复 Discovery → Formulation → Automation。至少让下一个故事从具体例子开始。
+
+### 12.2 代码写完后补场景却称为 BDD
+
+错误：实现完成后，为了测试覆盖率补 `.feature`。
+
+修正：称为 acceptance automation / characterization；对未来变更重新采用 BDD 流程。
+
+### 12.3 过程化 UI 脚本
 
 错误：
 
@@ -531,84 +981,183 @@ And I press the "login" button
 When "Bob" logs in
 ```
 
-UI 操作放到 step definition/helper 中。
+### 12.4 Feature-coupled step definitions
 
-### 反模式：conjunction step
+错误：每个 feature 文件一个同名 steps 文件，里面写只服务该 feature 的句子。
 
-错误：
+修正：按领域概念分组 step definitions，用 domain-related names。
 
-```gherkin
-Given I have shades and a brand new Mustang
+### 12.5 Conjunction steps
+
+错误：一个 step 同时做多件事。
+
+修正：拆成多个 steps，或在 step definition 中调用 helper methods 组合底层动作。
+
+### 12.6 Steps 调 steps
+
+错误：在 step definition 里用 Gherkin step 文本调用另一个 step 来复用。
+
+修正：抽普通 JavaScript 函数、domain helper、builder。
+
+### 12.7 条件跳过 scenario 或 step
+
+如果场景运行时根据条件跳过，多半说明一个 scenario 覆盖太多行为，或数据/环境不可控。拆场景并修复根因。
+
+### 12.8 Excel/CSV 测试用例替代 feature 文件
+
+Cucumber FAQ 不建议把测试用例保存在 Excel/CSV 中再由 Cucumber 读取。Feature 文件本身应该是可读的 executable specifications。若数据太多，通常表示场景抽象层级错误。
+
+### 12.9 验证深层实现细节
+
+错误：`Then` 检查数据库内部列、私有对象字段、日志实现细节。
+
+修正：验证用户或外部系统可观察输出：UI、API 响应、消息、报告、通知、状态变化的公开表现。
+
+## 13. AI agent 操作协议
+
+当用户要求“用 BDD 开发/设计/验收”时：
+
+1. **先按 BDD 定义定位任务**：这是协作/规格问题，还是只是 Cucumber 自动化问题？不要直接跳到工具。
+2. **读取证据**：需求、issue、代码、现有测试、领域词汇、产品文档。
+3. **切小故事**：把大需求切成可在一次 discovery 中澄清的小行为。
+4. **发现例子**：列正常例子、边界例子、拒绝/失败例子、未回答问题。
+5. **模拟 Three Amigos**：分别列产品范围、测试边界、开发约束；需要用户决策时问最小问题。
+6. **写 Gherkin 草案**：业务语言、具体数据、what not how。
+7. **确认产品语义**：涉及规则/范围/边界时先确认；不要把猜测写进代码。
+8. **自动化**：若用户要求实现，添加/更新 `.feature` 和 step definitions，先看到 undefined/pending/failing。
+9. **最小实现**：只写让当前例子通过的代码。
+10. **重构**：按领域组织 steps，抽 helpers，去重语言。
+11. **报告证据**：列 scenarios、运行命令、红绿过程、残留问题。
+
+如果用户只要求“review BDD”，不要擅自修改；输出具体发现和最小修正建议。
+
+## 14. BDD/Gherkin 评审清单
+
+### BDD 层
+
+- [ ] 是否以共享理解为目标，而不是只追测试覆盖率？
+- [ ] 是否先讨论具体例子，再写实现？
+- [ ] 是否明确 Who / What / Why？
+- [ ] 是否标出未回答问题和假设？
+- [ ] 是否避免把 Cucumber 使用本身等同于 BDD？
+
+### Scenario 层
+
+- [ ] 每个 scenario 是否说明一个具体业务规则/行为？
+- [ ] 是否使用具体真实数据，而非抽象占位？
+- [ ] 是否描述 what，而不是 how？
+- [ ] 是否避免 URL、按钮、CSS、数据库列等实现细节？
+- [ ] 步骤是否大致 3–5 个？
+- [ ] scenario 是否独立、可任意顺序运行？
+- [ ] `Then` 是否验证可观察结果？
+- [ ] Background 是否短且业务可读？
+- [ ] 是否用 Scenario Outline 消除重复例子？
+- [ ] 是否避免把海量数据塞进 Examples/Data Tables？
+
+### Step/code 层
+
+- [ ] 是否只实现已有 scenario 中出现的 steps？
+- [ ] step definitions 是否按领域概念组织？
+- [ ] 是否避免 feature-coupled steps？
+- [ ] 是否用 helper methods 复用，而不是 steps 调 steps？
+- [ ] Cucumber.js 中需要 World 的 steps/hooks 是否使用 `function () {}`？
+- [ ] `Then` 是否使用 assertion/throw/reject，而不是返回 false？
+- [ ] hooks 是否只放低层技术准备/清理？
+- [ ] 是否避免跨 scenario 共享状态？
+- [ ] 是否记录了至少一次失败反馈？
+
+## 15. 快速模板
+
+### 15.1 Discovery 输出模板
+
+```markdown
+## Story
+As a <actor>
+I want <capability>
+So that <benefit>
+
+## Rules
+- Rule 1: ...
+- Rule 2: ...
+
+## Examples
+- Example: <concrete case>
+  - Given ...
+  - When ...
+  - Then ...
+
+## Questions
+- [ ] ...
+
+## Out of scope / new stories
+- ...
 ```
 
-正确：
+### 15.2 Feature 模板
 
 ```gherkin
-Given I have shades
-And I have a brand new Mustang
+Feature: <business capability>
+  <why this matters>
+
+  Rule: <business rule>
+
+    Scenario: <concrete example title>
+      Given <known business context>
+      When <observable event/action>
+      Then <observable expected outcome>
 ```
 
-如果为了可读性需要组合多个底层动作，组合 helper methods，不要组合 Gherkin step 文本。
+### 15.3 Step definition 模板
 
-### 反模式：场景依赖顺序或复用另一个场景
+```javascript
+const assert = require('assert');
+const { Given, When, Then } = require('@cucumber/cucumber');
 
-每个 scenario 必须独立，可单独运行、任意顺序运行、并行运行。不要让一个 scenario 依赖前一个 scenario 创建的数据。共享动作抽 helper；共享上下文用 `Background` 或 fixtures；共享低层环境用 hooks。
+Given('<context with {int} or {string}>', function (value) {
+  // Arrange known state through helpers/builders.
+});
 
-### 反模式：过多技术细节或外部 CSV/Excel 测试用例
+When('<actor does business action>', async function () {
+  // Act through public behavior/API/UI helper.
+});
 
-Cucumber FAQ 明确不建议用 Excel/CSV 保存测试用例，因为 feature 文件本身应该是可读的 executable specification。若数据太多，通常说明 feature 文件细节过多；把构造细节移到 step definitions、helper 或 builder 中。
+Then('<observable result>', function () {
+  // Assert, do not return boolean.
+  assert.strictEqual(this.actual, this.expected);
+});
+```
 
-### 反模式：条件跳过步骤
+## 16. 何时回查官方文档
 
-如果你想在 scenario 中根据条件跳过后续步骤，多半说明一个场景测试了太多事情，或测试环境/数据不可控。拆分场景并修复根因。
+本技能已经内置大部分常用标准。只有在以下情况回查官方文档：
 
-## AI agent 工作协议
+- 需要精确 CLI/config option、formatter、plugin、parallel/retry/sharding 行为。
+- 项目使用非 JavaScript Cucumber 实现，需要语言特定 API。
+- Cucumber.js 版本与本技能示例不同，需要确认 Node engines 或 breaking changes。
+- 需要完整 DataTable/DocString API 或 custom parameter types。
+- 需要 debug formatter/reporting/publish 细节。
 
-当用户要求“用 BDD 开发/设计/验收”时，按下面协议执行：
+默认情况下，写/审 BDD 场景时直接使用本手册，不要把“去看链接”作为替代工作。
 
-1. **先找证据**：读取需求、issue、代码、现有测试、文档、领域词汇。
-2. **识别小变更**：把大需求切成一个可讨论的小行为；不要一次写完整系统规格。
-3. **发现例子**：列出正常例子、边界例子、失败/拒绝例子；缺业务决定时问最小必要问题。
-4. **写 Gherkin 草案**：用业务语言，保持具体，避免 UI/技术细节。
-5. **和用户确认**：如果例子表达了产品语义或边界决策，先确认再实现。
-6. **自动化**：用 Cucumber.js 创建/更新 `.feature` 和 step definitions；先运行看到 undefined/pending/failing，再实现。
-7. **最小实现**：只写让当前例子通过所需的代码。
-8. **重构**：去重 step definitions，抽 helper，按领域概念组织。
-9. **报告证据**：列出新增/修改的 scenarios、运行命令、红绿过程或无法验证的原因。
-
-如果用户只要求“写 Gherkin”，不要擅自实现生产代码；如果用户要求“实现 BDD”，则需要完整 red-green 反馈。
-
-## 评审清单
-
-在提交 BDD 相关改动前检查：
-
-- [ ] 是否先明确了用户故事或小变更？
-- [ ] 是否至少有一个具体例子，而不是抽象规则？
-- [ ] 例子是否使用领域语言和真实业务数据？
-- [ ] 场景是否描述 what，而不是 how？
-- [ ] 每个 scenario 是否只验证一个行为？
-- [ ] 每个 scenario 是否独立、可任意顺序运行？
-- [ ] `Then` 是否验证可观察输出？
-- [ ] 步骤数量是否大致 3–5，且每步只表达一件事？
-- [ ] 是否避免 feature-coupled step definitions？
-- [ ] 是否只实现了已有场景需要的 step definitions？
-- [ ] 是否用 helper methods 复用实现，而不是 steps 调 steps？
-- [ ] Cucumber.js step/hook 中需要 World 时是否使用 `function () {}`？
-- [ ] 是否运行 Cucumber 并记录结果？
-- [ ] 是否有至少一次失败反馈证明新例子能捕获缺失行为？
-
-## 参考资料
+## 17. 参考资料
 
 - Behavior-driven development — Wikipedia: <https://en.wikipedia.org/wiki/Behavior-driven_development>
 - Cucumber Introduction: <https://cucumber.io/docs/>
 - Cucumber BDD: <https://cucumber.io/docs/bdd/>
-- Cucumber 10-minute tutorial (JavaScript): <https://cucumber.io/docs/guides/10-minute-tutorial?lang=javascript>
-- Gherkin reference: <https://cucumber.io/docs/gherkin/reference/>
-- Writing better Gherkin: <https://cucumber.io/docs/bdd/better-gherkin/>
-- BDD examples: <https://cucumber.io/docs/bdd/examples/>
+- Cucumber myths: <https://cucumber.io/docs/bdd/myths/>
+- Discovery workshop: <https://cucumber.io/docs/bdd/discovery-workshop/>
+- Example Mapping: <https://cucumber.io/docs/bdd/example-mapping/>
 - Who does what / Three Amigos: <https://cucumber.io/docs/bdd/who-does-what/>
+- BDD examples: <https://cucumber.io/docs/bdd/examples/>
+- User story: <https://cucumber.io/docs/terms/user-story/>
+- Gherkin reference: <https://cucumber.io/docs/gherkin/reference/>
 - Step organization: <https://cucumber.io/docs/gherkin/step-organization/>
 - Step definitions: <https://cucumber.io/docs/cucumber/step-definitions/>
 - Cucumber API/reference: <https://cucumber.io/docs/cucumber/api/>
+- Cucumber state: <https://cucumber.io/docs/cucumber/state/>
+- Cucumber configuration: <https://github.com/cucumber/cucumber-js/blob/main/docs/configuration.md>
+- Cucumber profiles: <https://github.com/cucumber/cucumber-js/blob/main/docs/profiles.md>
+- Cucumber 10-minute tutorial (JavaScript): <https://cucumber.io/docs/guides/10-minute-tutorial?lang=javascript>
+- Writing better Gherkin: <https://cucumber.io/docs/bdd/better-gherkin/>
 - Anti-patterns: <https://cucumber.io/docs/guides/anti-patterns/>
 - FAQ: <https://cucumber.io/docs/faq/>

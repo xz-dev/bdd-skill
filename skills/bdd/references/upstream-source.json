@@ -1,6 +1,8 @@
 {
   "created_at_utc": "2026-06-28T01:39:34Z",
-  "skill_sha256": "f5c0fccb6c0d3fb78c7897c367c367b030e097c63065116621157f1ff19782d3",
+  "updated_at_utc": "2026-06-28T02:25:56Z",
+  "skill_sha256": "7f5d684c44ea47e233bf42c7ec4f0325def8e4892cb4fdfa070dd4b5a36e274f",
+  "purpose": "Precompiled BDD manual: starts from Wikipedia's Behavior-driven development definition and bundles practical Cucumber/Gherkin/Cucumber.js reference material, excluding complete API docs.",
   "sources": {
     "wikipedia_behavior_driven_development": "https://en.wikipedia.org/wiki/Behavior-driven_development",
     "cucumber_docs_site": "https://cucumber.io/docs/",
