@@ -1,0 +1,84 @@
+# Cucumber docs reviewed
+
+The full Markdown/MDX documentation set from `cucumber/website` was cloned locally and reviewed/indexed while creating this skill.
+
+- Upstream repository: https://github.com/cucumber/website
+- Upstream commit: `5af617a1434e7bfd577f1f9d68fae5e64d74fbe6`
+- Reviewed docs files: 74
+
+## Files
+
+- `docs/bdd/better-gherkin.md` — 86 lines
+- `docs/bdd/discovery-workshop.md` — 46 lines
+- `docs/bdd/example-mapping.md` — 37 lines
+- `docs/bdd/examples.md` — 18 lines
+- `docs/bdd/history.md` — 20 lines
+- `docs/bdd/index.md` — 98 lines
+- `docs/bdd/myths.md` — 32 lines
+- `docs/bdd/who-does-what.md` — 136 lines
+- `docs/contributing.md` — 33 lines
+- `docs/cucumber/api.mdx` — 1320 lines
+- `docs/cucumber/checking-assertions.md` — 161 lines
+- `docs/cucumber/configuration.mdx` — 677 lines
+- `docs/cucumber/cucumber-expressions.md` — 9 lines
+- `docs/cucumber/debugging.mdx` — 149 lines
+- `docs/cucumber/environment-variables.md` — 70 lines
+- `docs/cucumber/index.mdx` — 10 lines
+- `docs/cucumber/mocking-and-stubbing-with-cucumber.md` — 43 lines
+- `docs/cucumber/reporting.md` — 74 lines
+- `docs/cucumber/state.mdx` — 479 lines
+- `docs/cucumber/step-definitions.mdx` — 166 lines
+- `docs/faq.md` — 226 lines
+- `docs/gherkin/index.mdx` — 6 lines
+- `docs/gherkin/languages.mdx` — 17 lines
+- `docs/gherkin/reference.md` — 547 lines
+- `docs/gherkin/step-organization.mdx` — 187 lines
+- `docs/guides/10-minute-tutorial.mdx` — 1637 lines
+- `docs/guides/anti-patterns.mdx` — 172 lines
+- `docs/guides/api-automation.md` — 28 lines
+- `docs/guides/browser-automation.mdx` — 375 lines
+- `docs/guides/continuous-integration.md` — 54 lines
+- `docs/guides/index.mdx` — 5 lines
+- `docs/guides/parallel-execution.mdx` — 359 lines
+- `docs/guides/testable-architecture.md` — 69 lines
+- `docs/guides/upgrading.md` — 33 lines
+- `docs/index.md` — 79 lines
+- `docs/installation/amp-cucumber-cpp-runner.md` — 13 lines
+- `docs/installation/android.md` — 13 lines
+- `docs/installation/clojure.md` — 15 lines
+- `docs/installation/cplusplus.md` — 13 lines
+- `docs/installation/cwt-cucumber.md` — 13 lines
+- `docs/installation/d.md` — 13 lines
+- `docs/installation/gobdd.md` — 13 lines
+- `docs/installation/gocuke.md` — 13 lines
+- `docs/installation/golang.md` — 13 lines
+- `docs/installation/gosu.md` — 15 lines
+- `docs/installation/groovy.md` — 15 lines
+- `docs/installation/index.mdx` — 19 lines
+- `docs/installation/ios.md` — 13 lines
+- `docs/installation/java.md` — 85 lines
+- `docs/installation/javascript.md` — 19 lines
+- `docs/installation/jruby.md` — 15 lines
+- `docs/installation/jython.md` — 15 lines
+- `docs/installation/kotlin.md` — 17 lines
+- `docs/installation/lua.md` — 13 lines
+- `docs/installation/ocaml.md` — 57 lines
+- `docs/installation/perl.md` — 13 lines
+- `docs/installation/php.md` — 13 lines
+- `docs/installation/pytest-bdd.md` — 13 lines
+- `docs/installation/python.md` — 13 lines
+- `docs/installation/r.md` — 25 lines
+- `docs/installation/reqnroll.md` — 15 lines
+- `docs/installation/ruby.md` — 89 lines
+- `docs/installation/rust.md` — 13 lines
+- `docs/installation/scala.md` — 51 lines
+- `docs/installation/tcl.md` — 13 lines
+- `docs/installation/xunit-gherkin-quick.md` — 13 lines
+- `docs/terms/index.mdx` — 8 lines
+- `docs/terms/user-story.md` — 85 lines
+- `docs/tools/index.mdx` — 56 lines
+- `docs/tools/java.md` — 44 lines
+- `docs/tools/javascript.md` — 40 lines
+- `docs/tools/related-tools.md` — 104 lines
+- `docs/tools/ruby.md` — 151 lines
+- `docs/ztest-polyglot-once.mdx` — 45 lines
