@@ -1,46 +1,46 @@
-# Gherkin 与 Cucumber 快速参考：写高质量场景
+# Gherkin and Cucumber quick reference: writing high-quality scenarios
 
-> 目标：把“看起来能跑”变成“可读、可维护、可复用”的 `.feature` 实践指南。
+> Goal: turn `.feature` files from “looks runnable” into “readable, maintainable, and reusable” practice guidance.
 
-## 1. 先写语法骨架，再填充行为细节
+## 1. Write the syntax skeleton first, then fill in behavior details
 
-- `Feature`：一个业务能力。
-- `Rule`：将同一规则下的场景归组。
-- `Scenario`：一个具体可执行例子。
-- `Scenario Outline + Examples`：同类场景的多组输入。
-- `Background`：各场景共享的业务背景。
-- `Tags`：按维度标注分类和执行策略。
+- `Feature`: one business capability.
+- `Rule`: groups scenarios under the same rule.
+- `Scenario`: one concrete executable example.
+- `Scenario Outline + Examples`: several input sets for the same kind of scenario.
+- `Background`: business background shared by scenarios.
+- `Tags`: annotate classification dimensions and execution strategy.
 
-## 2. 核心语义
+## 2. Core semantics
 
-- `Given`：建立前提上下文（可观测业务状态）。
-- `When`：触发事件（行为动作）。
-- `Then`：断言可观察结果。
-- `And/But/*`：延续步类型，不是额外语法概念。
+- `Given`: establishes prerequisite context (observable business state).
+- `When`: triggers an event (behavior/action).
+- `Then`: asserts an observable outcome.
+- `And/But/*`: continue the previous step type; they are not additional semantic categories.
 
-注意：`Given` 与 `Then` 并不表示业务上可互换，场景表达要保持语义一致。
+Note: `Given` and `Then` are not interchangeable in business meaning; keep scenario expression semantically consistent.
 
-## 3. 常用写作规则（高频修正项）
+## 3. Common writing rules (frequent corrections)
 
-1. 统一语言，避免同一业务事实出现多个措辞。
-2. 使用真实具体数据（时间、数量、金额、对象）。
-3. **What not how**，保持行为语言。
-4. 一个 step 一件事。
-5. `Scenario` 可独立运行，不依赖顺序。
-6. `Scenario Outline` 替代重复拷贝。
-7. `Background` 保持短，避免承载实现细节。
+1. Keep language consistent; avoid using multiple phrases for the same business fact.
+2. Use real concrete data (dates, quantities, amounts, objects).
+3. **What, not how**: keep behavior language.
+4. One step, one thing.
+5. A `Scenario` runs independently and does not depend on order.
+6. Use `Scenario Outline` instead of repeated copy-paste.
+7. Keep `Background` short and avoid implementation details.
 
-## 4. 常见反模式
+## 4. Common anti-patterns
 
-- 写成 UI 操作脚本：`点击按钮`、`填写字段`等细节直接进入主语句。
-- 技术参数直接写入 `Given`。
-- 复用/重复 step 文案失控（`Given`、`When` 重复但语义不同）。
-- `Background` 承担测试环境搭建细节。
-- 一条 step 包含多个业务动作（junction/conjunction）。
+- Writing UI interaction scripts: details such as “click a button” and “fill in a field” appear directly in the main statement.
+- Putting technical parameters directly into `Given`.
+- Losing control of reused/repeated step wording (`Given`/`When` are repeated but mean different things).
+- Using `Background` for test-environment setup details.
+- One step contains multiple business actions (conjunction steps).
 
-## 5. 当场改写示例
+## 5. Rewrite example
 
-### 旧（技术化）
+### Old (technical)
 
 ```gherkin
 Scenario: Discount works
@@ -49,7 +49,7 @@ Scenario: Discount works
   Then the discount should be shown
 ```
 
-### 新（行为化）
+### New (behavior-focused)
 
 ```gherkin
 Scenario: Discount expires after campaign
@@ -59,29 +59,29 @@ Scenario: Discount expires after campaign
   Then the summer discount is not applied
 ```
 
-## 6. 结构化排错路径
+## 6. Structured troubleshooting path
 
-- 语句重复多：先检查同义表达。
-- 规则边界不清：在 `Rule` 或 `Examples` 中补充 negative case。
-- tags 泛化过度：拆分 tags 维度。
-- 例子过长：考虑拆成多个场景。
+- Too much repeated wording: check for synonymous expressions first.
+- Rule boundaries are unclear: add a negative case under `Rule` or `Examples`.
+- Tags are over-generalized: split tag dimensions.
+- The example is too long: consider splitting it into multiple scenarios.
 
-## 7. 与外链衔接（要点优先）
+## 7. Connecting to external links (key points first)
 
-- Gherkin reference：关键字、结构、案例规则。
-- Step organization：step 组织和复用边界。
-- Writing better Gherkin：语言质量指导。
-- Step definitions：与 steps 的绑定关系。
-- Anti-patterns：长期维护时的风险点。
+- Gherkin reference: keywords, structure, and example rules.
+- Step organization: step organization and reuse boundaries.
+- Writing better Gherkin: language-quality guidance.
+- Step definitions: binding relationship with steps.
+- Anti-patterns: long-term maintenance risks.
 
-## 8. 场景决策速记
+## 8. Scenario decision mnemonic
 
-- 优先回答：这个场景是否回答了一个可观察业务问题？
-- 是否能被业务/测试/开发共同理解？
-- 是否容易单独运行与调试？
-- 是否有明确失败语义（not/反例）？
+- Does this scenario answer an observable business question?
+- Can business, testing, and development understand it together?
+- Is it easy to run and debug independently?
+- Does it have clear failure semantics (negative cases/counterexamples)?
 
-## 9. 目录与文件约定（默认）
+## 9. Directory and file convention (default)
 
 ```text
 features/
@@ -91,4 +91,4 @@ features/
     hooks.js
 ```
 
-- 重点不是“文件名”，而是场景是否可读。
+The important thing is not the file name; it is whether the scenario is readable.

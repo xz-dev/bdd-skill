@@ -8,7 +8,7 @@ The installable skill lives at:
 skills/bdd/SKILL.md
 ```
 
-It is written in Chinese. The skill is intentionally a **precompiled manual**: it starts from Wikipedia's BDD definition, then embeds the practical Cucumber/Gherkin/Cucumber.js guidance an AI agent usually needs, instead of merely linking out to docs. JavaScript/Cucumber.js examples are used because the JavaScript setup is small and easy to follow.
+The skill is intentionally a **precompiled manual**: it starts from Wikipedia's BDD definition, then embeds the practical Cucumber/Gherkin/Cucumber.js guidance an AI agent usually needs, instead of merely linking out to docs. JavaScript/Cucumber.js examples are used because the JavaScript setup is small and easy to follow.
 
 ## What it covers
 
@@ -55,10 +55,10 @@ During creation, the Cucumber website docs repository was cloned/reviewed, and C
 
 The skill keeps the following local references under `skills/bdd/references/`:
 
-- `official-reference-map.md`:入口索引与本地参考定位（先选对文件再查内容）。
-- `bdd-practice-reference.md`: BDD 的 Discovery/Formulation/Automation 实践要点与决策模板。
-- `gherkin-cucumber-reference.md`: Gherkin 与场景写作常见问题速查。
-- `cucumber-js-reference.md`: Cucumber.js 的执行侧落地与故障排查。
+- `official-reference-map.md`: entry index and local reference locator (choose the right file before reading details).
+- `bdd-practice-reference.md`: BDD Discovery/Formulation/Automation practice points and decision templates.
+- `gherkin-cucumber-reference.md`: quick reference for common Gherkin and scenario-writing questions.
+- `cucumber-js-reference.md`: Cucumber.js execution implementation and troubleshooting.
 
 ## License
 

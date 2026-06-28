@@ -1,59 +1,59 @@
-# BDD 实践参考：BDD 的协作闭环
+# BDD practice reference: the BDD collaboration loop
 
-> 目的：回答“行为、需求、验收到底要讲清什么”，再决定是否走到 Cucumber.js 自动化。
+> Purpose: answer “what behavior, requirements, and acceptance criteria must be clarified?” before deciding whether to proceed to Cucumber.js automation.
 
-## 1. 核心立场（先于工具）
+## 1. Core stance (before tools)
 
-- BDD 不是“特定测试框架”，而是以协作为核心的行为规格方法。
-- 目标是让业务与开发形成**共享理解**：
-  - 同一个目标
-  - 明确的规则边界
-  - 能被反例打破/更新的可执行示例
-- 自动化是手段，不是定义。Cucumber/Gherkin 可以是实现方式，但不是 BDD 本身。
+- BDD is not “a specific test framework”; it is a behavior-specification method centered on collaboration.
+- The goal is for business and development to form **shared understanding**:
+  - the same goal;
+  - clear rule boundaries;
+  - executable examples that can be broken or updated by counterexamples.
+- Automation is a means, not the definition. Cucumber/Gherkin can be an implementation approach, but they are not BDD itself.
 
-## 2. Discovery（发现）：先澄清行为，再谈实现
+## 2. Discovery: clarify behavior before implementation
 
-在 Discovery 中先解决：
+In Discovery, resolve these first:
 
-- 我们到底要解决哪个业务问题？
-- 哪些是规则、边界和异常？
-- 还有哪些未回答问题？
+- What business problem are we actually solving?
+- Which rules, boundaries, and exceptions apply?
+- Which questions remain unanswered?
 
-建议产出：
+Recommended outputs:
 
-- Story（故事）
-- Rules（规则）
-- Examples（示例）
-- Questions（问题）
+- Story
+- Rules
+- Examples
+- Questions
 
-### 常见触发
+### Common triggers
 
-- 团队对“同一个需求是否一致”有分歧
-- 新故事反复修改但未稳定
-- 场景写出来仍反复争论边界行为
+- The team disagrees about whether “the same requirement” means the same thing.
+- A new story keeps changing and has not stabilized.
+- Written scenarios still lead to repeated arguments about boundary behavior.
 
-### 快速判断
+### Quick judgment
 
-- 先问：Who / What / Why
-- 先明确：什么算成功？失败案例如何定义？
-- 先留：无法确认的假设，不要把它写进已确认规则
+- Ask first: Who / What / Why.
+- Clarify first: what counts as success? How are failure cases defined?
+- Preserve first: assumptions that cannot be confirmed; do not write them into confirmed rules.
 
-## 3. Formulation（表达）：把发现变成可沟通的规格
+## 3. Formulation: turn discovery into communicable specifications
 
-### Example Mapping 模型
+### Example Mapping model
 
-- **Story（黄卡）**：叙述目标或故事
-- **Rules（蓝卡）**：验收规则与边界条件
-- **Examples（绿卡）**：可验证的正/反例
-- **Questions（红卡）**：仍待确认的问题
+- **Story (yellow card)**: describes the goal or story.
+- **Rules (blue cards)**: acceptance rules and boundary conditions.
+- **Examples (green cards)**: verifiable positive and negative examples.
+- **Questions (red cards)**: questions still awaiting confirmation.
 
 ### Three Amigos
 
-- **产品/业务**：价值与范围
-- **测试/质量**：边界与失败路径
-- **开发**：实现约束与可行性
+- **Product/business**: value and scope.
+- **Testing/quality**: boundaries and failure paths.
+- **Development**: implementation constraints and feasibility.
 
-建议先输出最小结构：
+Recommended minimal output:
 
 ```markdown
 ## Story
@@ -66,7 +66,7 @@ So that <benefit>
 - R2: ...
 
 ## Examples
-- Example: <具体可执行例子>
+- Example: <concrete executable example>
   - Given ...
   - When ...
   - Then ...
@@ -78,42 +78,42 @@ So that <benefit>
 - ...
 ```
 
-### User Story 与 Acceptance Criteria
+### User Story and Acceptance Criteria
 
-- User Story 回答的是“谁 / 需要什么 / 为什么有价值”。
-- AC 要可验证，至少能描述：
-  - 可观察结果
-  - 边界条件
-  - 反例
+- A User Story answers “who / needs what / why it is valuable.”
+- Acceptance Criteria must be verifiable and at least describe:
+  - observable outcomes;
+  - boundary conditions;
+  - counterexamples.
 
-## 4. Automation（自动化）：把闭环收口到反馈
+## 4. Automation: close the loop with feedback
 
-典型节奏（适用于每个小行为）：
+Typical rhythm for each small behavior:
 
-1. 写出场景或规则示例（不追求一上来全覆盖）
-2. 运行并看到 `undefined`
-3. 补 step definitions
-4. 看到失败（assert/边界失败）
-5. 做最小实现让它通过
-6. 重构并补关键边界例子
+1. Write a scenario or rule example (do not try to cover everything immediately).
+2. Run it and see `undefined`.
+3. Add step definitions.
+4. See a failure (assertion or boundary failure).
+5. Implement the smallest change that makes it pass.
+6. Refactor and add key boundary examples.
 
-自动化检查的是行为是否被正确执行，不是代替需求澄清。
+Automation checks whether behavior is executed correctly; it does not replace requirements clarification.
 
-## 5. 常见反模式
+## 5. Common anti-patterns
 
-- 写了代码后再补场景（反向闭环）
-- 用技术动作代替业务语言
-- 场景之间存在运行顺序依赖
-- 把未回答问题当成已确认规则
-- 用大量数据表替代场景抽象
+- Adding scenarios after code is written (the loop is reversed).
+- Replacing business language with technical actions.
+- Creating run-order dependencies between scenarios.
+- Treating unanswered questions as confirmed rules.
+- Replacing scenario abstraction with large data tables.
 
-## 6. 何时回看官方来源
+## 6. When to return to official sources
 
-- `Discovery / Formulation / Automation` 及实践框架：Cucumber BDD 文档 / Three Amigos / Example Mapping。
-- 反模式/写作风格：Cucumber Better Gherkin / Anti-patterns。
-- 需要版本或实现细节：到对应官方文档再确认。
+- For `Discovery / Formulation / Automation` and practice frameworks: Cucumber BDD documentation / Three Amigos / Example Mapping.
+- For anti-patterns and writing style: Cucumber Better Gherkin / Anti-patterns.
+- For version-specific or implementation details: confirm with the corresponding official documentation.
 
-## 7. 精简外部入口清单
+## 7. Compact external entry list
 
 - Wikipedia: Behavior-driven development: https://en.wikipedia.org/wiki/Behavior-driven_development
 - Cucumber BDD Guide: https://cucumber.io/docs/bdd/
