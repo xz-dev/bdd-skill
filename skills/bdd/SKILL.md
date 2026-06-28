@@ -15,6 +15,16 @@ metadata:
 
 # BDD（Behavior-Driven Development）预编译手册
 
+## 快速使用：BDD 编写和测试步骤
+
+1. **先澄清行为**：写下 Who / What / Why、业务规则、具体正反例、未回答问题；不要从测试框架或 UI 步骤开始。
+2. **写 Gherkin 草案**：用领域语言表达 `Given` 上下文、`When` 事件、`Then` 可观察结果；先按第 7 节质量门槛修文字，再写 glue code。
+3. **运行规格看反馈**：用 Cucumber/Cucumber.js 跑 `.feature`，先看到 `undefined` / `pending` / failing，证明场景能驱动缺失行为。
+4. **补 step definitions 和最小实现**：step definitions 只连接场景与系统行为；生产代码只做到让当前例子通过。
+5. **重构并补边界**：保持场景语言稳定，抽 helper/World/hooks，补关键边界或反例；报告红绿过程和仍待确认的问题。
+
+如果只是 review BDD/Gherkin，停在第 1–2 步和第 14 节清单；如果用户明确要求实现/测试，再进入第 3–5 步。
+
 ## 0. 标准定义先于工具
 
 **Behavior-driven development — Wikipedia:** <https://en.wikipedia.org/wiki/Behavior-driven_development>
