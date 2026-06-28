@@ -230,7 +230,7 @@ Feature: Subscription billing
       Then Priya can read the article
 ```
 
-Indent by two spaces. Comments can only be added at the start of a new line with `#`; Gherkin does not support block comments.
+Recommended: indent by two spaces. Comments can only be added at the start of a new line with `#`; Gherkin does not support block comments.
 
 ### 6.2 Feature
 
@@ -423,7 +423,7 @@ When writing/reviewing `.feature` files, first treat Gherkin as a product specif
 3. **Concrete without being technical**: it has real roles, amounts, dates, states, or objects; it does not use placeholders such as `user1`, `foo`, or `result is correct`.
 4. **Clear Given/When/Then semantics**: `Given` establishes business context, `When` triggers an event, and `Then` asserts an externally observable result.
 5. **Short, independent, and reviewable**: usually 3–5 steps; it does not depend on another scenario; `Background`, `Examples`, and Data Tables carry only necessary semantics.
-6. **Fix wording before failure**: if the scenario needs explanation to be understood, or can only be expressed through implementation details, return to Discovery/Formulation instead of writing glue code.
+6. **If wording fails the gate, fix it first**: if the scenario needs explanation to be understood, or can only be expressed through implementation details, return to Discovery/Formulation instead of writing glue code.
 
 ### 7.1 Concrete, but not technical
 
@@ -863,7 +863,7 @@ Then('the balance should be {int}', function (expectedBalance) {
 Cucumber.js supports async/promise step definitions:
 
 ```javascript
-When('Alice transfers {int} to Bob', async function (amount) {
+When('Alice transfers ${int} to Bob', async function (amount) {
   this.response = await this.api.transfer({ from: 'Alice', to: 'Bob', amount });
 });
 ```

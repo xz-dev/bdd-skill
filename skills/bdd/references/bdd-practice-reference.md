@@ -36,7 +36,7 @@ Recommended outputs:
 
 - Ask first: Who / What / Why.
 - Clarify first: what counts as success? How are failure cases defined?
-- Preserve first: assumptions that cannot be confirmed; do not write them into confirmed rules.
+- Record first: assumptions that cannot be confirmed; do not write them into confirmed rules.
 
 ## 3. Formulation: turn discovery into communicable specifications
 

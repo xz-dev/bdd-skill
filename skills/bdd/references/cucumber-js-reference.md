@@ -1,6 +1,6 @@
 # Cucumber.js reference: from scenarios to execution
 
-> This is not complete API documentation; it is a high-frequency decision map for implementing Cucumber.js.
+> This is not complete API documentation; it is a high-frequency decision map for using Cucumber.js to automate scenarios.
 
 ## 1. When to read this
 

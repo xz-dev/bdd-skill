@@ -16,7 +16,8 @@
 - `Given`: establishes prerequisite context (observable business state).
 - `When`: triggers an event (behavior/action).
 - `Then`: asserts an observable outcome.
-- `And/But/*`: continue the previous step type; they are not additional semantic categories.
+- `And` / `But`: continue the previous step type for readability.
+- `*`: can be used as a list-like step keyword and is not a separate business semantic category.
 
 Note: `Given` and `Then` are not interchangeable in business meaning; keep scenario expression semantically consistent.
 
