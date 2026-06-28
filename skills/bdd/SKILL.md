@@ -1141,23 +1141,49 @@ Then('<observable result>', function () {
 
 ## 17. 参考资料
 
-- Behavior-driven development — Wikipedia: <https://en.wikipedia.org/wiki/Behavior-driven_development>
-- Cucumber Introduction: <https://cucumber.io/docs/>
-- Cucumber BDD: <https://cucumber.io/docs/bdd/>
-- Cucumber myths: <https://cucumber.io/docs/bdd/myths/>
-- Discovery workshop: <https://cucumber.io/docs/bdd/discovery-workshop/>
-- Example Mapping: <https://cucumber.io/docs/bdd/example-mapping/>
-- Who does what / Three Amigos: <https://cucumber.io/docs/bdd/who-does-what/>
-- BDD examples: <https://cucumber.io/docs/bdd/examples/>
-- User story: <https://cucumber.io/docs/terms/user-story/>
-- Gherkin reference: <https://cucumber.io/docs/gherkin/reference/>
-- Step organization: <https://cucumber.io/docs/gherkin/step-organization/>
-- Step definitions: <https://cucumber.io/docs/cucumber/step-definitions/>
-- Cucumber API/reference: <https://cucumber.io/docs/cucumber/api/>
-- Cucumber state: <https://cucumber.io/docs/cucumber/state/>
-- Cucumber configuration: <https://github.com/cucumber/cucumber-js/blob/main/docs/configuration.md>
-- Cucumber profiles: <https://github.com/cucumber/cucumber-js/blob/main/docs/profiles.md>
-- Cucumber 10-minute tutorial (JavaScript): <https://cucumber.io/docs/guides/10-minute-tutorial?lang=javascript>
-- Writing better Gherkin: <https://cucumber.io/docs/bdd/better-gherkin/>
-- Anti-patterns: <https://cucumber.io/docs/guides/anti-patterns/>
-- FAQ: <https://cucumber.io/docs/faq/>
+### 17.1 本地参考（优先）
+
+用于未来 AI agent 的默认阅读顺序：
+
+- [official-reference-map.md](references/official-reference-map.md)
+  - 先判断当前问题是“实践问题 / 场景写作 / 执行问题”，再选择下一步。
+- [bdd-practice-reference.md](references/bdd-practice-reference.md)
+  - Discovery / Formulation / Automation、Example Mapping、Three Amigos、Story 与 AC。
+- [gherkin-cucumber-reference.md](references/gherkin-cucumber-reference.md)
+  - Gherkin 语法结构、场景可维护性、常见反模式修正。
+- [cucumber-js-reference.md](references/cucumber-js-reference.md)
+  - Cucumber.js 运行侧（Step definitions、World、Hooks、配置、排障）。
+- [source-notes.md](references/source-notes.md)
+  - 本技能为何这样抽取官方信息的来源说明（对外追溯）。
+
+### 17.2 外部官方入口（按需）
+
+- 定义与实践：
+  - Behavior-driven development — Wikipedia: <https://en.wikipedia.org/wiki/Behavior-driven_development>
+  - Cucumber BDD Guide: <https://cucumber.io/docs/bdd/>
+  - Cucumber Discovery Workshop: <https://cucumber.io/docs/bdd/discovery-workshop/>
+  - Cucumber Example Mapping: <https://cucumber.io/docs/bdd/example-mapping/>
+  - Cucumber Who does what / Three Amigos: <https://cucumber.io/docs/bdd/who-does-what/>
+  - Cucumber Myths: <https://cucumber.io/docs/bdd/myths/>
+- Gherkin 与写法：
+  - Gherkin reference: <https://cucumber.io/docs/gherkin/reference/>
+  - Step organization: <https://cucumber.io/docs/gherkin/step-organization/>
+  - Writing better Gherkin: <https://cucumber.io/docs/bdd/better-gherkin/>
+  - Cucumber Anti-patterns: <https://cucumber.io/docs/guides/anti-patterns/>
+  - Step definitions: <https://cucumber.io/docs/cucumber/step-definitions/>
+  - Cucumber API/reference: <https://cucumber.io/docs/cucumber/api/>
+- Cucumber.js（JS 执行）：
+  - Cucumber state / World: <https://cucumber.io/docs/cucumber/state/>
+  - Cucumber.js configuration: <https://github.com/cucumber/cucumber-js/blob/main/docs/configuration.md>
+  - Cucumber.js profiles: <https://github.com/cucumber/cucumber-js/blob/main/docs/profiles.md>
+  - Cucumber.js hooks: <https://github.com/cucumber/cucumber-js/blob/main/docs/support_files/hooks.md>
+  - Cucumber.js world: <https://github.com/cucumber/cucumber-js/blob/main/docs/support_files/world.md>
+  - plugins/formatter/parallel/retry/sharding 等按需查 Cucumber.js docs: <https://github.com/cucumber/cucumber-js/tree/main/docs>
+- 教程与扩展：
+  - Cucumber 10-minute tutorial（JavaScript）: <https://cucumber.io/docs/guides/10-minute-tutorial?lang=javascript>
+
+### 17.3 使用建议
+
+- 默认不先读外链。除非本地文档无法快速回答，或需要精确版本参数（CLI、formatter、parallel/retry 等）。
+- 任何时候先确认：行为协作问题是否先于工具。
+- 若出现细节分歧，结合本地参考与官方文档逐步补齐。

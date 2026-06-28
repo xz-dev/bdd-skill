@@ -37,26 +37,35 @@ Copy or symlink `skills/bdd/SKILL.md` into your agent's skill directory, or inst
 
 Primary references:
 
-- Behavior-driven development — Wikipedia: <https://en.wikipedia.org/wiki/Behavior-driven_development>
-- Cucumber Introduction: <https://cucumber.io/docs/>
-- Cucumber BDD guide: <https://cucumber.io/docs/bdd/>
-- Cucumber 10-minute tutorial with JavaScript examples: <https://cucumber.io/docs/guides/10-minute-tutorial?lang=javascript>
-- Gherkin reference: <https://cucumber.io/docs/gherkin/reference/>
-- Writing better Gherkin: <https://cucumber.io/docs/bdd/better-gherkin/>
-- Cucumber myths: <https://cucumber.io/docs/bdd/myths/>
-- Cucumber discovery workshop: <https://cucumber.io/docs/bdd/discovery-workshop/>
-- Cucumber Example Mapping: <https://cucumber.io/docs/bdd/example-mapping/>
-- Cucumber Who does what / Three Amigos: <https://cucumber.io/docs/bdd/who-does-what/>
-- Cucumber anti-patterns: <https://cucumber.io/docs/guides/anti-patterns/>
+- Behavior-driven development — Wikipedia: https://en.wikipedia.org/wiki/Behavior-driven_development
+- Cucumber Introduction: https://cucumber.io/docs/
+- Cucumber BDD guide: https://cucumber.io/docs/bdd/
+- Cucumber 10-minute tutorial with JavaScript examples: https://cucumber.io/docs/guides/10-minute-tutorial?lang=javascript
+- Gherkin reference: https://cucumber.io/docs/gherkin/reference/
+- Writing better Gherkin: https://cucumber.io/docs/bdd/better-gherkin/
+- Cucumber myths: https://cucumber.io/docs/bdd/myths/
+- Cucumber discovery workshop: https://cucumber.io/docs/bdd/discovery-workshop/
+- Cucumber Example Mapping: https://cucumber.io/docs/bdd/example-mapping/
+- Cucumber Who does what / Three Amigos: https://cucumber.io/docs/bdd/who-does-what/
+- Cucumber anti-patterns: https://cucumber.io/docs/guides/anti-patterns/
 
-During creation, the Cucumber website docs repository was cloned and the full `docs/` Markdown/MDX set was reviewed/indexed. The Cucumber.js repository docs and executable feature files were also sampled/reviewed for JavaScript-specific details such as World, hooks, snippets, and configuration. See:
+During creation, the Cucumber website docs repository was cloned/reviewed, and Cucumber.js docs plus executable feature files were sampled/reviewed for JavaScript-specific details such as World, hooks, snippets, and configuration. The repository now keeps a curated local runtime reference bundle instead of bulky reviewed-file inventories; pinned upstream commits and reviewed-file counts are recorded in `skills/bdd/references/upstream-source.json`. See:
 
 - `skills/bdd/references/source-notes.md`
-- `skills/bdd/references/cucumber-docs-reviewed.md`
-- `skills/bdd/references/cucumber-js-docs-reviewed.md`
 - `skills/bdd/references/upstream-source.json`
 - `skills/bdd/references/cucumber-website-license.txt`
 - `skills/bdd/references/cucumber-js-license.txt`
+
+## Local reference bundle
+
+The skill keeps the following local references under `skills/bdd/references/`:
+
+- `official-reference-map.md`:入口索引与本地参考定位（先选对文件再查内容）。
+- `bdd-practice-reference.md`: BDD 的 Discovery/Formulation/Automation 实践要点与决策模板。
+- `gherkin-cucumber-reference.md`: Gherkin 与场景写作常见问题速查。
+- `cucumber-js-reference.md`: Cucumber.js 的执行侧落地与故障排查。
+- `source-notes.md`: 上游来源与取舍说明。
+- `upstream-source.json`: 上游元数据/哈希。
 
 ## License
 
